@@ -1,5 +1,9 @@
 <script lang="ts">
-
-</script>
-
-<h1>Students</h1>
+    import Profile from "$lib/components/profile.svelte";
+    </script>
+    <h1>Students</h1>
+    <main>
+      <Profile/>
+    </main>
+    
+    <slot />
