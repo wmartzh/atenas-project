@@ -6,7 +6,7 @@
 	export let icon: string | null = null;
 	export let active = false;
 
-	let isActive  = active ? 'active' : null
+	$: isActive  = active ? 'active' : null
 </script>
 
 <li class="{$$restProps.class || ''}">
