@@ -4,8 +4,8 @@
 	import { page } from '$app/stores';
 
 	const sidebarItems = [
-		{ title: 'Estudiantes', href: '/app/admin/students', icon: 'ph-student' },
-		{ title: 'Perfil', href: '/app/profile', icon: 'iconoir:profile-circle' }
+		{ title: 'Estudiantes', url: '/app/admin/students', icon: 'ph-student' },
+		{ title: 'Perfil', url: '/app/profile', icon: 'iconoir:profile-circle' }
 	];
 </script>
 
@@ -22,9 +22,9 @@
 			{#each sidebarItems as item}
 				<SidebarItem
 					title={item.title}
-					href={item.href}
+					url={item.url}
 					icon={item.icon}
-					active={item.href === $page.url.pathname}
+					active={$page.url.pathname === item.url}
 				/>
 			{/each}
 		</Sidebar>
