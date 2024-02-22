@@ -1,3 +1,19 @@
+<script lang="ts">
+	import DropdownMenu from './dropdown-menu.svelte';
+	import { signOut } from 'firebase/auth';
+	import { auth } from '$lib/firebase';
+	import { goto } from '$app/navigation';
+	export function logout() {
+		signOut(auth)
+			.then(() => {
+				goto('/login');
+			})
+			.catch((error) => {
+				throw new Error(error);
+			});
+	}
+</script>
+
 <div class="navbar bg-base-100">
 	<div class="flex-none">
 		<label for="sidebar" aria-label="close sidebar" class="lg:hidden btn btn-ghost drawer-button">
@@ -19,27 +35,6 @@
 		<span class="btn btn-ghost text-xl">Atenas</span>
 	</div>
 	<div class="flex-none">
-		<div class="dropdown dropdown-end">
-			<div tabIndex={0} role="button" class="btn btn-ghost btn-circle avatar">
-				<div class="w-10 rounded-full">
-					<img
-						alt="Tailwind CSS Navbar component"
-						src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-					/>
-				</div>
-			</div>
-			<ul
-				tabIndex={0}
-				class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-			>
-				<li>
-					<a href="/app/profile">
-						Profile
-						
-					</a>
-				</li>
-		
-			</ul>
-		</div>
+		<slot name="navbar-content" ></slot>
 	</div>
 </div>
