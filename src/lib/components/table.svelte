@@ -3,7 +3,7 @@
     export let titles: { label: string; key: string }[];
   </script>
   <div class="overflow-x-auto">
-  <table class="table table-xs">
+  <table class="table table-zebra">
     <thead>
       <tr>
         {#each titles as title (title.key)}

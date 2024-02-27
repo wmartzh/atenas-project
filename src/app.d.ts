@@ -5,7 +5,10 @@ import type { PrismaClient } from '@prisma/client';
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			id: string;
+			email: string;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
