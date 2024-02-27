@@ -1,20 +1,19 @@
 <script lang="ts">
 	import Sidebar from '$lib/components/sidebar.svelte';
 	import SidebarItem from '$lib/components/sidebar-item.svelte';
-	import Navbar from '../../lib/components/navbar.svelte';
-	import DropdownMenu from '../../lib/components/dropdown-menu.svelte';
-	import DropdownItem from '../../lib/components/dropdown-item.svelte';
+	import Navbar from '$lib/components/navbar.svelte';
+	import DropdownMenu from '$lib/components/dropdown-menu.svelte';
+	import DropdownItem from '$lib/components/dropdown-item.svelte';
 	import { page } from '$app/stores';
-	import { signOut } from 'firebase/auth';
-	import { auth } from '$lib/firebase';
-	import { goto } from '$app/navigation';
-	import { session } from '$lib/store/session';
-	import { onMount } from 'svelte';
-	import type { LayoutData } from './$types';
+
 
 	const sidebarItems = [
 		{ title: 'Home', url: '/app', icon: 'fe:home' },
-		{ title: 'Students', url: '/app/admin/students', icon: 'ph-student' }
+		{ title: 'Students', url: '/app/admin/students', icon: 'ph-student' },
+		{ title: 'Users', url: '/app/admin/users', icon: 'tabler:users' },
+		{ title: "Events" , url: "/app/admin/events", icon: "ph:calendar" },
+		{ title: "Attendance" , url: "/app/admin/attendance", icon: "mdi:calendar-edit-outline"}
+		
 	];
 
 	$: currentPage = $page.url.pathname;
