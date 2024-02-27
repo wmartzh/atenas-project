@@ -13,7 +13,7 @@
         career: "Derecho",room: 15 },
         {id:4, name: "Ana", lastname: "Campos", university: "TEC",identification: 180285,
         phonenumber: 75412548,nacionality: "Nicaragua",gender: "Femenino",
-        career: "Ingenieria Civil",room: 18 },
+        career: "Ingenieria Civil,",room: 18 },
         {id:5, name: "Luis", lastname: "Vargas", university: "UNA",identification: 220596,
         phonenumber: 35648975,nacionality: "Panama",gender: "Femenino",
         career: "Contabilidad",room: 13 },
