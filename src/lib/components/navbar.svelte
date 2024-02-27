@@ -1,17 +1,5 @@
 <script lang="ts">
 	import DropdownMenu from './dropdown-menu.svelte';
-	import { signOut } from 'firebase/auth';
-	import { auth } from '$lib/firebase';
-	import { goto } from '$app/navigation';
-	export function logout() {
-		signOut(auth)
-			.then(() => {
-				goto('/login');
-			})
-			.catch((error) => {
-				throw new Error(error);
-			});
-	}
 </script>
 
 <div class="navbar bg-base-100">
