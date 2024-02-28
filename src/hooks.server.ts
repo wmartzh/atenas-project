@@ -1,14 +1,14 @@
 import { redirect, type Handle } from '@sveltejs/kit';
-import { building } from '$app/environment';
 import { getFirebaseServer } from './lib/firebase.server';
 import type { DecodedIdToken } from 'firebase-admin/auth';
+
+const  WHITE_LIST = ["/auth","/create-account"]
 
 export const handle: Handle = async ({ event, resolve }) => {
 	event.locals.id = '';
 	event.locals.email = '';
 
-	const isAuth: boolean = event.url.pathname === '/auth';
-	if (isAuth || building) {
+	if (WHITE_LIST.includes(event.url.pathname)) {
 		event.cookies.set('session', '', {
 			path: '/'
 		});
