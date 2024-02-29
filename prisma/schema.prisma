@@ -72,7 +72,7 @@ model Profile {
   nacionality    String
   gender         Gender
   career         String
-  room           String
+  room           String?
   user           User     @relation(fields: [userId], references: [id])
   userId         Int      @unique
   createdAt      DateTime @default(now())
