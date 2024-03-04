@@ -1,8 +1,9 @@
 <script lang="ts">
 	import Card from '$lib/components/card.svelte';
 	import Icon from '@iconify/svelte';
-	import { auth, initializeFirebase } from '$lib/firebase';
+  import logo from '$lib/assets/logo_text.svg';
 
+	import { auth } from '$lib/firebase';
 	import { signInWithEmailAndPassword } from 'firebase/auth';
 
 	let email: string = '';
@@ -37,9 +38,10 @@
 
 <div class="hero min-h-screen bg-blue-950">
 	<div class="hero-content text-center justify-center">
-		<Card>
+		<Card class="w-70">
 			<div slot="card-body" class="flex flex-col gap-4">
-				<h1 class="text-2xl font-bold">Welcome to Atenas!</h1>
+				<h1 class="text-2xl font-bold">Welcome!</h1>
+				<img src={logo} alt="Atenas" class="w-1/3 mx-auto fill-blue-950" />
 				<form
 					class="flex flex-col gap-3"
 					bind:this={form}

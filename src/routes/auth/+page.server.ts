@@ -1,39 +1,21 @@
 import { redirect } from '@sveltejs/kit';
-import { getFirebaseServer } from '../../lib/firebase.server.js';
 
+import authService from '$server/services/auth.service';
 export const actions = {
 	default: async ({ request, cookies }) => {
 		const form = await request.formData();
 
 		const token = form.get('token');
 
-		if (!token || typeof token !== 'string') {
-			throw redirect(303, '/auth');
-		}
-		const admin = getFirebaseServer();
-		if (admin.error) {
-			throw redirect(303, '/auth');
-		}
-
-		// Expires in 5 days
-		const expiresIn = 60 * 60 * 24 * 5;
-		let sessionCookie: string;
 		try {
-			sessionCookie = await admin.data
-				.auth()
-				.createSessionCookie(token, { expiresIn: expiresIn * 1000 });
+			if (!token || typeof token !== 'string') {
+				throw Error('Token not found');
+			}
+
+			await authService.authenticate(token, cookies);
 		} catch (error) {
-			console.error(error);
 			throw redirect(303, '/auth');
 		}
-
-		cookies.set('session', sessionCookie, {
-			maxAge: expiresIn,
-			path: '/',
-			httpOnly: true,
-			secure: true,
-			sameSite: 'lax'
-		});
 
 		throw redirect(303, '/app');
 	}

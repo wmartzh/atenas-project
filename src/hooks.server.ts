@@ -1,5 +1,5 @@
 import { redirect, type Handle } from '@sveltejs/kit';
-import { getFirebaseServer } from './lib/firebase.server';
+import { getFirebaseServer } from './server/firebase.server';
 import type { DecodedIdToken } from 'firebase-admin/auth';
 
 const  WHITE_LIST = ["/auth","/create-account"]
