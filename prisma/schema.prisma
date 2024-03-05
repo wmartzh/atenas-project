@@ -80,15 +80,15 @@ model Profile {
 }
 
 model Event {
-  id           Int         @id @default(autoincrement())
+  id           Int          @id @default(autoincrement())
   title        String
   start        DateTime
   end          DateTime
-  status       EventStatus @default(ACTIVE)
+  status       EventStatus  @default(ACTIVE)
   weekDays     WeekDays[]
   scheduleDate DateTime?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @default(now())
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @default(now())
   attendace    Attendance[]
 }
 
@@ -96,10 +96,10 @@ model Attendance {
   id        Int      @id @default(autoincrement())
   userId    Int
   createdBy String
-  eventId   Int  
+  eventId   Int
   timeStamp DateTime @default(now())
   users     User     @relation(fields: [userId], references: [id])
-  events    Event    @relation(fields: [eventId], references: [id])
+  event     Event    @relation(fields: [eventId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
