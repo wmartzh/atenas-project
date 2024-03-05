@@ -89,15 +89,17 @@ model Event {
   scheduleDate DateTime?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @default(now())
+  attendace    Attendance[]
 }
 
 model Attendance {
   id        Int      @id @default(autoincrement())
   userId    Int
   createdBy String
-  eventId   String
+  eventId   Int  
   timeStamp DateTime @default(now())
   users     User     @relation(fields: [userId], references: [id])
+  events    Event    @relation(fields: [eventId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }
