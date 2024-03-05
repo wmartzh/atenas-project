@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Divider from '$lib/components/divider.svelte';
 	import Profile from '$lib/components/profile.svelte';
 	import type { PageData } from './$types';
 

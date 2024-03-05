@@ -10,8 +10,6 @@
 
     saved = true;
     editing = false; // Deshabilita la edición después de guardar
-
-    // Aquí puedes realizar acciones adicionales, como enviar los datos a un servidor
   }
 
   function toggleEdit() {
