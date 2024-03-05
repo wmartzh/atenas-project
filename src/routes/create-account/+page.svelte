@@ -6,6 +6,7 @@
 	import worldCountries from '$lib/assets/world_countries.json';
 	import { createForm } from 'felte';
 	import Joi from 'joi';
+	import { onMount } from 'svelte';
 
 	const { form, errors } = createForm({
 		validate: async (values) => {
@@ -25,7 +26,57 @@
 			return {};
 		}
 	});
+
+	let screenWidth: number;
+
+	const updateScreenWidth = () => {
+		screenWidth = window.innerWidth;
+	};
+
+	// Llama a la función cuando se crea el componente y en cada cambio de tamaño de ventana
+	onMount(() => {
+		updateScreenWidth();
+		window.addEventListener('resize', updateScreenWidth);
+		
+		// Limpia el evento de cambio de tamaño al destruir el componente
+		return () => {
+			window.removeEventListener('resize', updateScreenWidth);
+		};
+	});
 </script>
+
+<style>
+	/* Tus estilos existentes aquí */
+
+	/* Estilos responsivos */
+	.hero-content {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.w-50 {
+		width: 100%; /* Ancho completo en pantallas pequeñas */
+	}
+
+	@media (min-width: 768px) {
+		.w-50 {
+			width: 50%; /* Ancho del 50% en pantallas medianas y grandes */
+		}
+	}
+
+	.flex-row {
+		flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+	}
+
+	@media (min-width: 768px) {
+		.flex-row {
+			flex-direction: row; /* Cambia de nuevo a fila en pantallas medianas y grandes */
+		}
+	}
+
+	/* Opcional: Agrega más estilos responsivos según tu diseño */
+</style>
 
 <div class="hero min-h-screen min-w-screen bg-blue-950">
 	<div class="hero-content text-center justify-center">
