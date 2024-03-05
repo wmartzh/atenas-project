@@ -6,20 +6,15 @@
 	import DropdownItem from '$lib/components/dropdown-item.svelte';
 	import { page } from '$app/stores';
 
-
 	const sidebarItems = [
 		{ title: 'Home', url: '/app', icon: 'fe:home' },
 		{ title: 'Students', url: '/app/admin/students', icon: 'ph-student' },
 		{ title: 'Users', url: '/app/admin/users', icon: 'tabler:users' },
-		{ title: "Events" , url: "/app/admin/events", icon: "ph:calendar" },
-		{ title: "Attendance" , url: "/app/admin/attendance", icon: "mdi:calendar-edit-outline"}
-		
+		{ title: 'Events', url: '/app/admin/events', icon: 'ph:calendar' },
+		{ title: 'Attendance', url: '/app/admin/attendance', icon: 'mdi:calendar-edit-outline' }
 	];
 
 	$: currentPage = $page.url.pathname;
-
-
-
 </script>
 
 <main>

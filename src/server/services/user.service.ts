@@ -15,6 +15,18 @@ export class UserService {
       }
     })
   }
+  async getAllUsers() {
+    try {
+      return prisma.user.findMany({
+        include: {
+          profile: true
+        }
+      })
+      
+    } catch (error) {
+       return []
+    }
+  }
 }
 
 export default new UserService();
