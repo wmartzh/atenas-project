@@ -5,10 +5,12 @@
 	export let data: PageData;
 </script>
 
-<h1>Hello this is profile</h1>
+<div class="flex">
+	<!-- Perfil -->
+	<div class="w-7/12">
+	  <Profile />
+	</div>
 
-<div>
-	<Profile />
+	<!-- Espacio en blanco -->
+	<div class="w-0/12"></div>
 </div>
-
-
