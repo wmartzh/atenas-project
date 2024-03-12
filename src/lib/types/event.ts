@@ -1,6 +1,4 @@
-import { updated } from "$app/stores";
-import { s } from "vitest/dist/reporters-1evA5lom.js";
-  
+
   // Create the event type with status as an enum
   export type Event = {
     id: string;

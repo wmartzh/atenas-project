@@ -4,8 +4,11 @@
 	import Navbar from '$lib/components/navbar.svelte';
 	import DropdownMenu from '$lib/components/dropdown-menu.svelte';
 	import DropdownItem from '$lib/components/dropdown-item.svelte';
+	import BreadCrumb from '$lib/components/breadcrumb.svelte';
+
 	import { page } from '$app/stores';
 	import { globalState, setTheme } from '$lib/store/global';
+	import type { BreadcrumbInput } from '../../lib/types';
 
 	const sidebarItems = [
 		{ title: 'Home', url: '/app', icon: 'fe:home' },
@@ -25,6 +28,18 @@
 			setTheme('light');
 		}
 	};
+
+	$: breadcrumbs = $page.url.pathname
+		.split('/')
+		.map((item, index, arr) => {
+			if (item !== 'admin') {
+				return {
+					title: item.replace(/\b\w/g, (l) => l.toUpperCase()),
+					url: arr.slice(0, index + 1).join('/')
+				};
+			}
+		})
+		.filter((item) => item !== undefined) as BreadcrumbInput[];
 </script>
 
 <main>
@@ -84,6 +99,9 @@
 					</DropdownMenu>
 				</div>
 			</Navbar>
+			<div class="p-1 bg-gray-700 text-white">
+				<BreadCrumb items={breadcrumbs ?? null} />
+			</div>
 			<div class=" container-mx-auto p-4">
 				<slot />
 			</div>

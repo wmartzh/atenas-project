@@ -52,6 +52,8 @@ export class ProfileService {
 		return {email: formData.email, password: formData.password};
 		//Create User on Prisma
 	}
+
+	
 }
 
 export default new ProfileService();

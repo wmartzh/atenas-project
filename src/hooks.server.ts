@@ -29,6 +29,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 		throw redirect(303, '/auth');
 	}
 	const { uid, email } = decodedClaims;
+
+	console.log('◉ ▶ consthandle:Handle= ▶ decodedClaims:', decodedClaims);
 	event.locals.id = uid;
 	event.locals.email = email ?? '';
 

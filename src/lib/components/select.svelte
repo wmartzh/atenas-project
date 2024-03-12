@@ -9,10 +9,12 @@
   export let descriptor:ObjOpts | null = null
   export let title = ''
   export let name : string | null = null
+  export let value: string | null = null  
+  export let disabled: boolean | null = false;
 </script>
 
-<select class={"select "+$$restProps.class || 'select'} {name}>
-  <option disabled selected>{title}</option>
+<select class={"select "+$$restProps.class || 'select'} {name} {value} {disabled}>
+  <option disabled selected >{title}</option>
 
   {#if descriptor}
     {#each options as option}

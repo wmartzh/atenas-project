@@ -27,6 +27,17 @@ export class UserService {
        return []
     }
   }
+
+  getUserByEmail(email: string) {
+    return prisma.user.findUnique({
+      where: {
+        email
+      },
+      include: {
+        profile: true
+      }
+    })
+  }
 }
 
 export default new UserService();
