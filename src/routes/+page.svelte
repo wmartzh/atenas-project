@@ -7,22 +7,11 @@
   let password = '';
   let role = 'estudiante';
   let gender = 'maculino';
+
+  import Resolucion from "$lib/components/resolucion.svelte";
 </script>
 <main style="display: flex; align-items: center; justify-content: center; height: 100vh;">
-<form>
-  <style>
-    .form-row {
-      display: flex;
-    }
-  
-    .form-control {
-      margin-right: 1rem;
-    }
-
-    .form-controls {
-      width: 160%;
-    }
-  </style>
+<form >
   
   <div class="form-row">
     <div class="form-control w-full max-w-xs">
@@ -115,5 +104,29 @@
 </form>
 </main>
 
+
+
+
+<style>
+
+
+
+
+
+
+  
+  .form-row {
+    display: flex;
+  }
+
+  .form-control {
+    margin-right: 1rem;
+  }
+
+  .form-controls {
+    width: 160%;
+  }
+</style>
+<Resolucion/>
 
    
