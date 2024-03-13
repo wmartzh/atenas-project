@@ -1,21 +1,36 @@
-// Event service page
-import { writable } from "svelte/store";
-import type { Event, weekDays, EventStatus } from "../../lib/types/event"; 
+import type { Event } from '../../lib/types/event';
 
-const events = writable<Event[]>([]);
+const API_BASE_URL = 'postgresql://wmartzh:K7iywXf5tjSm@ep-yellow-lab-a5hvi0aq-pooler.us-east-2.aws.neon.tech/atenasdb?sslmode=require'; 
 
-const eventService = {
-  getAll: () => events,
-  getById: (id: string) => events.subscribe(eventsList => eventsList.find(event => event.id === id)),
-  create: (event: Event) => events.update(eventsList => [...eventsList, event]),
-  update: (id: string, updatedEvent: Event) => events.update(eventsList => {
-    const index = eventsList.findIndex(event => event.id === id);
-    if (index !== -1) {
-      eventsList[index] = { ...eventsList[index], ...updatedEvent };
-    }
-    return [...eventsList];
-  }),
-  delete: (id: string) => events.update(eventsList => eventsList.filter(event => event.id !== id))
-};
+export async function fetchEvents(): Promise<Event[]> {
+  const response = await fetch(`${API_BASE_URL}/events`);
+  return await response.json();
+}
 
-export default eventService;
+export async function createEvent(eventData: Event): Promise<Event> {
+  const response = await fetch(`${API_BASE_URL}/events`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(eventData)
+  });
+  return await response.json();
+}
+
+export async function updateEvent(id: string, eventData: Event): Promise<Event> {
+  const response = await fetch(`${API_BASE_URL}/events/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(eventData)
+  });
+  return await response.json();
+}
+
+export async function deleteEvent(id: string): Promise<void> {
+  await fetch(`${API_BASE_URL}/events/${id}`, {
+    method: 'DELETE'
+  });
+}

@@ -1,23 +1,99 @@
-import type { export PageServerLoad } from './$types';
-import type { Event, weekDays, EventStatus } from '../../../../lib/types/event'; 
-import eventService from '../../../../server/services/event.service' 
+import { writable } from 'svelte/store';
+import type { Event } from '../../../../lib/types/event'; 
 
+let events: Event[] = [];
 
-export const load: PageServerLoad = async () => {
-  const events = await eventService.getAll().subscribe();
-  return { events };
-};
+const eventsStore = writable(events);
 
-// Actions
-export const _createEvent = async (event: Event) => {
-    await eventService.create(event);
-};
+export async function load({ fetch }: { fetch: any }) {
+  return {
+    props: {
+      events: events,
+      eventsStore: eventsStore 
+    }
+  };
+}
 
-export const _updateEvent = async (id: string, updatedEvent: Event) => {
-    await eventService.update(id, updatedEvent);
-};
+async function post(request: any) {
+  const { title, start, end, status, weekDay, scheduleDate, createdAt, updatedAt } = request.body;
+  const id = Math.random().toString(36).substr(2, 9); 
 
-export const _deleteEvent = async (id: string) => {
-    await eventService.delete(id);
-    await eventService.delete(id);
+  const newEvent: Event = {
+    id,
+    title,
+    start,
+    end,
+    status,
+    weekDay,
+    scheduleDate,
+    createdAt,
+    updatedAt
+  };
+
+  events.push(newEvent);
+  eventsStore.set(events);
+
+  return {
+    status: 201,
+    body: newEvent
+  };
+}
+
+async function put(request: any) {
+  const { id } = request.params;
+  const index = events.findIndex(event => event.id === id);
+
+  if (index === -1) {
+    return {
+      status: 404,
+      body: { message: 'Event not found' }
+    };
+  }
+
+  const { title, start, end, status, weekDay, scheduleDate, createdAt, updatedAt } = request.body;
+  const updatedEvent: Event = {
+    id,
+    title,
+    start,
+    end,
+    status,
+    weekDay,
+    scheduleDate,
+    createdAt,
+    updatedAt
+  };
+
+  events[index] = updatedEvent;
+  eventsStore.set(events);
+
+  return {
+    status: 200,
+    body: updatedEvent
+  };
+}
+
+async function del(request: any) {
+  const { id } = request.params;
+  const index = events.findIndex(event => event.id === id);
+
+  if (index === -1) {
+    return {
+      status: 404,
+      body: { message: 'Event not found' }
+    };
+  }
+
+  events.splice(index, 1);
+  eventsStore.set(events);
+
+  return {
+    status: 204,
+    body: null
+  };
+}
+
+export const actions = {
+  post,
+  put,
+  del
 };
