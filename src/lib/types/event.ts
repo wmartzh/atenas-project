@@ -1,5 +1,4 @@
 import { updated } from "$app/stores";
-import { s } from "vitest/dist/reporters-1evA5lom.js";
   
   // Create the event type with status as an enum
   export type Event = {
@@ -7,7 +6,7 @@ import { s } from "vitest/dist/reporters-1evA5lom.js";
     title: string;
     start: string;
     end: string;
-    status: EventStatus;
+    status: eventStatus;
     weekDay: weekDays;
     scheduleDate: string;
     createdAt: string;
@@ -15,7 +14,7 @@ import { s } from "vitest/dist/reporters-1evA5lom.js";
   };
   
   // Define the weekDays enum
-  enum weekDays {
+  export enum weekDays {
     Monday,
     Tuesday,
     Wednesday,
@@ -25,7 +24,7 @@ import { s } from "vitest/dist/reporters-1evA5lom.js";
     Sunday
   }
   
-enum EventStatus {
+  export enum eventStatus {
     Pending,
     Confirmed,
     Canceled

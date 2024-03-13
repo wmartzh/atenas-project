@@ -1,4 +1,11 @@
 <script lang="ts">
+	import CreateEvents from "$lib/components/CreateEvents.svelte";
+
+
 
 </script>
-<h1>Events Page</h1>
+
+
+<div>
+    <CreateEvents />
+</div>
