@@ -1,36 +1,36 @@
-import type { Event } from '../../lib/types/event';
+import { fail } from "@sveltejs/kit";
+import prisma from "$server/prisma.client";
 
-const API_BASE_URL = 'postgresql://wmartzh:K7iywXf5tjSm@ep-yellow-lab-a5hvi0aq-pooler.us-east-2.aws.neon.tech/atenasdb?sslmode=require'; 
+export class eventService {
+    async createEvent({ request }: { request: any }) {
+        try {
+            const formData = Object.fromEntries(await request.formData());
+            const { title, start, end, scheduleDate, createdAt, updatedAt } = formData as {
+                title: string;
+                start: string;
+                end: string;
+                scheduleDate: string;
+                createdAt: string;
+                updatedAt: string;
+            };
 
-export async function fetchEvents(): Promise<Event[]> {
-  const response = await fetch(`${API_BASE_URL}/events`);
-  return await response.json();
+            await prisma.event.create({
+                data: {
+                    title,
+                    start,
+                    end,
+                    scheduleDate,
+                    createdAt,
+                    updatedAt,
+                },
+            });
+
+            return { status: 201 };
+        } catch (error) {
+            console.error(error);
+            return fail(500, { message: 'Error creating event' });
+        }
+    }
 }
 
-export async function createEvent(eventData: Event): Promise<Event> {
-  const response = await fetch(`${API_BASE_URL}/events`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(eventData)
-  });
-  return await response.json();
-}
-
-export async function updateEvent(id: string, eventData: Event): Promise<Event> {
-  const response = await fetch(`${API_BASE_URL}/events/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(eventData)
-  });
-  return await response.json();
-}
-
-export async function deleteEvent(id: string): Promise<void> {
-  await fetch(`${API_BASE_URL}/events/${id}`, {
-    method: 'DELETE'
-  });
-}
+export default new eventService();
