@@ -6,7 +6,6 @@
 	import Select from '$lib/components/select.svelte';
 	import worldCountries from '$lib/assets/world_countries.json';
 	import careers from '$lib/assets/careers.json';
-	import type { MouseEventHandler } from 'svelte/elements';
 	import { createForm } from 'felte';
 
 	export let data: PageData;
@@ -17,7 +16,17 @@
 		editable = !editable;
 	}
 
-	const { form } = createForm({});
+	const { form } = createForm({
+		onSubmit: async (_values, ctx) => {
+			if (!editable) {
+				toggleEdit();
+				ctx.reset();
+			} else {
+				toggleEdit();
+				ctx.form?.submit();
+			}
+		}
+	});
 </script>
 
 <div class="grid grid-cols-2 gap-4">
@@ -120,12 +129,11 @@
 				</div>
 				<div class="md:grid grid-cols-2 gap-4">
 					{#if editable}
-						<span class="btn btn-sm btn-ghost" on:click={() => toggleEdit()}>Cancelar</span>
+						<button class="btn btn-sm btn-ghost" type="button" on:click={() => toggleEdit()}
+							>Cancelar</button
+						>
 					{/if}
-					<button
-						class="btn btn-sm btn-primary"
-						type="submit"
-						on:click={(e) => (editable ? {} : toggleEdit())}
+					<button class="btn btn-sm btn-primary" type="submit"
 						>{editable ? 'Guardar' : 'Editar'}</button
 					>
 				</div>

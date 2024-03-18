@@ -35,7 +35,7 @@ export class ProfileService {
 			phoneNumber: formData.phoneNumber,
 			gender: $Enums.Gender[formData.gender],
 			identification: formData.identification,
-			universityId: formData.noCarnet,
+			universityId: formData.universityId,
 			career: 'undef',
 			user: {
         create: {
