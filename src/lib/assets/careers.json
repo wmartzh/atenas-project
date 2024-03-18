@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Ingenieria en Sistemas",
+    "code": "IS"
+  },
+  {
+    "title": "Psicologia",
+    "code": "PS"
+  },
+  {
+    "title":"Teologia",
+    "code":"TE"
+  },
+  {
+    "title": "Educacion Prescolar",
+    "code": "EP"
+  },
+  {
+    "title": "Educacion Primaria",
+    "code": "EPR"
+  },
+  {
+    "title": "Educacion Secundaria",
+    "code": "ES"
+  },
+  {
+    "title": "Administracion de Empresas",
+    "code": "AE"
+  },
+  {
+    "title":"Enfermeria",
+    "code":"EN"
+  }
+]

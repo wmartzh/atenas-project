@@ -6,6 +6,7 @@
 	export let title: string | null = null;
 	export let name: string | null = '';
 	export let value: string | null = null;
+	export let disabled: boolean | null = false;
 
 
 </script>
@@ -15,7 +16,7 @@
 		{title}
 	{/if}
 	<slot name="label" />
-	<input {type} {name} {value} class={inputClass ?? 'input input-bordered'} {placeholder} />
+	<input {type} {name} {value} {disabled} class={inputClass ?? 'input input-bordered'} {placeholder} />
 	<slot name="button-label"/>
 </label>
 
