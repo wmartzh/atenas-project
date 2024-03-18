@@ -67,6 +67,20 @@ export class ProfileService {
     }
   }
 
+  async getProfileById(profileId: number) {
+    try {
+      return prismaClient.profile.findUnique({
+        where: { id: profileId },
+        include: {
+          user: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      throw new Error('Error fetching profile. Please try again.');
+    }
+  }
+
   async updateProfile(profileId: number, updatedProfileData: Prisma.ProfileUpdateInput) {
     try {
       const updatedProfile = await prismaClient.profile.update({
