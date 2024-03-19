@@ -35,7 +35,18 @@
       { label: "Gender", key: "gender" },
       { label: "Career", key: "career" },
       { label: "Room", key: "room" },
+
     ];
+    function handleRowClick(row: any) {
+     
+      console.log(row);
+    }
+    function onSearch(e:any){
+      console.log(e.detail);
+    
+    }
   </script>
   
-  <Table {data} {titles} />
+  <Table {data} {titles} on:row-click={handleRowClick}  on:search={onSearch} editable={true}>
+
+  </Table>
