@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { createEventDispatcher, onMount } from 'svelte';
 	export let data: any[];
-	export let titles: { label: string; key: string }[];
+	export let titles: { label: string; key: string; formatter?: (value: any) => any }[];
 	export let editable: boolean | null = false;
 
 	const dispatch = createEventDispatcher();
 	let searchText = '';
-
-
-
 
 	function handleSearch(event: Event) {
 		dispatch('search', searchText);
@@ -53,7 +50,13 @@
 								<slot name="action" {row} />
 							</td>
 						{:else}
-							<td>{row[title.key]}</td>
+							<td>
+								{#if title.formatter}
+									{title.formatter(row[title.key])}
+								{:else}
+									{row[title.key]}
+								{/if}
+							</td>
 						{/if}
 					{/each}
 				</tr>
@@ -65,6 +68,6 @@
 <style lang="postcss">
 	.clickable:hover {
 		@apply cursor-pointer bg-slate-400;
-		@apply shadow-md ;
+		@apply shadow-md;
 	}
 </style>
