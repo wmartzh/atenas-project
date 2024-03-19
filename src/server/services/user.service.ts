@@ -39,7 +39,7 @@ export class UserService {
 		});
 	}
 
-	updateUser(email: string,uuid:string,data: Prisma.UserUpdateInput) {
+	updateUser(email: string, uuid: string, data: Prisma.UserUpdateInput, replaceEmail?: string) {
 		const firebaseServer = getFirebaseServer();
 		if (firebaseServer.error) {
 			throw firebaseServer.error;
@@ -48,10 +48,11 @@ export class UserService {
 		if (!firebaseServer.data) {
 			throw new Error('Firebase server data is not available');
 		}
-
-    firebaseServer.data.auth().updateUser(uuid,{
-      email, 
-    })
+		if (replaceEmail) {
+			firebaseServer.data.auth().updateUser(uuid, {
+				email:replaceEmail
+			});
+		}
 
 		return prisma.user.update({
 			where: {

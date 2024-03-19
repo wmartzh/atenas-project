@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Profile from '$lib/components/profile.svelte';
 	import Icon from '@iconify/svelte';
 	import type { PageData } from './$types';
 	import FormInput from '$lib/components/form-input.svelte';
@@ -29,7 +28,7 @@
 	});
 </script>
 
-<div class="grid grid-cols-2 gap-4">
+<div class="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
 	<div class="p-4">
 		<form use:form method="post">
 			<div class="mb-4">
@@ -63,7 +62,7 @@
 				<FormInput
 					inputClass="input input-ghost font-semibold"
 					value={user?.email}
-					disabled={!editable}
+					disabled={true}
 				>
 					<div class="label" slot="label">
 						<span class="label-text f text-gray-500">Correo</span>
@@ -140,9 +139,9 @@
 			</div>
 		</form>
 	</div>
-	<div class="p-4 flex justify-center">
+	<div class=" flex p-4 justify-center  ">
 		<Icon
-			class="self-center"
+			class=" self-center"
 			icon="mingcute:cube-3d-line"
 			width="192"
 			height="192"
