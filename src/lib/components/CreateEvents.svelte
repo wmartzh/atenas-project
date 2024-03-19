@@ -1,40 +1,55 @@
 <script>
-  /*import { _createEvent, _updateEvent, _deleteEvent } from '../../routes/app/admin/events/+page.server';*/
-  /*import { Event, weekDays, eventStatus } from '../../lib/types/event';*/
-
   let events = [];
-
   let isModalOpen = false;
   let name = "";
   let date = "";
   let time = "";
   let endTime = "";
-  let status = "Pending";
-  let weekDay = "Sunday";
+  let endDate = "";
+  let status = "Pendiente";
+  let weekDay = "";
+  let selectAllDays = false;
+  let daysOfWeek = {
+    Domingo: false,
+    Lunes: false,
+    Martes: false,
+    Miércoles: false,
+    Jueves: false,
+    Viernes: false,
+    Sábado: false,
+  };
 
   function addEvent() {
-    if (name && date && time && endTime && status && weekDay) {
-      events = [...events, {id: "",
+    if (name && date && time && endTime && status && endDate) {
+      daysOfWeek[weekDay] = true;
+      
+      events = [...events, {
+        id: generateId(),
         title: name, 
-        start:`${date} ${time}`, 
-        end:`${date} ${endTime}`,
+        start: `${date} ${time}`, 
+        end: `${endDate} ${endTime}`,
         status: status,
-        weekDay: weekDay,
         scheduleDate: date,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
+        daysOfWeek: daysOfWeek
       }];
       name = "";
       date = "";
       time = "";
       endTime = "";
-      status = "Pending";
-      weekDay = "Sunday";
+      endDate = "";
+      status = "Pendiente";
+      daysOfWeek = {
+        Domingo: false,
+        Lunes: false,
+        Martes: false,
+        Miércoles: false,
+        Jueves: false,
+        Viernes: false,
+        Sábado: false,
+      };
     }
-  }
-
-  function sortEvents() {
-    events.sort((a, b) => new Date(a.start) - new Date(b.start));
   }
 
   function generateId() {
@@ -46,14 +61,6 @@
   }
 
   function closeModal() {
-    isModalOpen = false;
-  }
-
-  function openModal2() {
-    isModalOpen = true;
-  }
-
-  function closeModal2() {
     isModalOpen = false;
   }
 
@@ -74,6 +81,15 @@
       alert("Por favor, selecciona una hora de finalización para el evento.");
       return;
     }
+    if (endDate === "") {
+      alert("Por favor, selecciona una fecha de finalización para el evento.");
+      return;
+    }
+    let atLeastOneDaySelected = Object.values(daysOfWeek).some(day => day);
+    if (!atLeastOneDaySelected) {
+      alert("Por favor, selecciona al menos un día para el evento.");
+      return;
+    }
 
     addEvent();
     closeModal();
@@ -81,12 +97,13 @@
 
   function cancelEvent() {
     isModalOpen = false;
-    name = "";
-    date = "";
-    time = "";
-    endTime = "";
-    status = "Pending";
-    weekDay = "Sunday";
+  }
+
+  function toggleAllDays() {
+    selectAllDays = selectAllDays;
+    Object.keys(daysOfWeek).forEach(day => {
+      daysOfWeek[day] = selectAllDays;
+    });
   }
 </script>
 
@@ -94,14 +111,19 @@
 
 <div>
   <ul>
-    {#each events as {id, title, start, end, status, weekDay, scheduleDate, createdAt, updatedAt}}
+    {#each events as {id, title, start, end, status, scheduleDate, createdAt, updatedAt, daysOfWeek}}
       <li>
-        <strong>ID:</strong> {generateId}<br>
+        <strong>ID:</strong> {id}<br>
         <strong>Nombre:</strong> {title}<br>
         <strong>Inicio:</strong> {start}<br>
         <strong>Fin:</strong> {end}<br>
         <strong>Estado:</strong> {status}<br>
-        <strong>Día de la semana:</strong> {weekDay}<br>
+        <strong>Día(s) de la semana:</strong>
+        <ul>
+          {#each Object.keys(daysOfWeek) as day}
+            {#if daysOfWeek && daysOfWeek[day]}<li>{day}</li>{/if}
+          {/each}
+        </ul>
         <strong>Fecha programada:</strong> {scheduleDate}<br>
         <strong>Creado en:</strong> {createdAt}<br>
         <strong>Actualizado en:</strong> {updatedAt}
@@ -148,27 +170,34 @@
             <input type="time" id="time_end" name="time_end" bind:value={endTime} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
           </div>
           <div class="flex flex-col">
-            <label for="status" class="text-sm font-medium text-gray-700 mb-2">Estado</label>
-            <select id="status" name="status" bind:value={status} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
-              <option value="Pending">Pendiente</option>
-              <option value="Confirmed">Confirmado</option>
-              <option value="Canceled">Cancelado</option>
-            </select>
+            <label for="date_end" class="text-sm font-medium text-gray-700 mb-2">Fecha de finalización</label>
+            <input type="date" id="date_end" name="date_end" bind:value={endDate} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
           </div>
           <div class="flex flex-col">
-            <label for="weekDay" class="text-sm font-medium text-gray-700 mb-2">Día de la semana</label>
-            <select id="weekDay" name="weekDay" bind:value={weekDay} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
-              <option value="Sunday">Domingo</option>
-              <option value="Monday">Lunes</option>
-              <option value="Tuesday">Martes</option>
-              <option value="Wednesday">Miércoles</option>
-              <option value="Thursday">Jueves</option>
-              <option value="Friday">Viernes</option>
-              <option value="Saturday">Sábado</option>
+            <label for="status" class="text-sm font-medium text-gray-700 mb-2">Estado</label>
+            <select id="status" name="status" bind:value={status} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+              <option value="Pendiente">Pendiente</option>
+              <option value="Confirmado">Confirmado</option>
+              <option value="Cancelado">Cancelado</option>
             </select>
           </div>
+          <div class="flex items-center">
+            <input type="checkbox" id="select_all_days" name="select_all_days" bind:checked={selectAllDays} on:change={toggleAllDays} class="focus:ring-blue-500 focus:border-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+            <label for="select_all_days" class="ml-2 text-sm text-gray-700">Seleccionar todos los días</label>
+          </div>
+          <label class="text-sm font-medium text-gray-700 mb-2">Día(s) de la semana</label>
+          <div class="flex flex-wrap gap-x-4 gap-y-2">
+            {#if daysOfWeek}
+              {#each Object.keys(daysOfWeek) as day}
+                <div class="flex items-center">
+                  <input type="checkbox" id="{day.toLowerCase()}" name="{day.toLowerCase()}" bind:checked={daysOfWeek[day]} class="focus:ring-blue-500 focus:border-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                  <label for="{day.toLowerCase()}" class="ml-2 text-sm text-gray-700">{day}</label>
+                </div>
+              {/each}
+            {/if}
+          </div>
         </div>
-        <div class="flex justify-end space-x-2 p-4 border-t border-gray-200 rounded-b-lg">
+        <div class="flex justify-center space-x-2 p-4 border-t border-gray-200 rounded-b-lg">
           <button type="button" on:click="{cancelEvent}" class="px-4 py-2 text-gray-500 hover:text-gray-700 rounded-md">Cancelar</button>
           <button type="button" on:click="{saveEvent}" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
         </div>
@@ -176,122 +205,3 @@
     </div>
   </div>
 </div>
-
-<!--<script>
-  let name = "Jorhany";
-  let title = "Web Developer";
-  let skills = ["HTML", "CSS", "JavaScript"];
-
-  let comments = [];
-  let commentTitle = "";
-  let commentText = "";
-  let extra = "";
-
-  function addComment() {
-    if (commentTitle && commentText && extra) {
-      comments = [...comments, { title: commentTitle, text: commentText, name: extra }];
-      commentTitle = "";
-      commentText = "";
-      extra = "";
-    }
-  }
-</script>
-
-<main>
-  <section class="profile-section">
-    <img src="https://www.bing.com/images/search?view=detailV2&ccid=RP6q%2fIch&id=AAB9F6A75A16C3066AD7A3667E4F2FB3265BF070&thid=OIP.RP6q_IchUHbl6131Mo04pQHaHa&mediaurl=https%3a%2f%2fwww.asofiduciarias.org.co%2fwp-content%2fuploads%2f2018%2f06%2fsin-foto.png&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.44feaafc87215076e5eb5df5328d38a5%3frik%3dcPBbJrMvT35mow%26pid%3dImgRaw%26r%3d0&exph=510&expw=510&q=imagen+de+perfil+sin+foto&simid=608000922578929465&FORM=IRPRST&ck=EDD95CED6C9FCB7FF56CD478FAF33E37&selectedIndex=2&itb=0" alt="Logo de Perfil" />
-    <div>
-      <h2>{name}</h2>
-      <p>{title}</p>
-      <ul>
-        {#each skills as skill}
-          <li>{skill}</li>
-        {/each}
-      </ul>
-    </div>
-  </section>
-
-  <section class="comments-section">
-    <h3>Agregar Comentario</h3>
-    <form on:submit|preventDefault={addComment}>
-      <label>
-        Título:
-        <input bind:value={commentTitle} />
-      </label>
-      <label>
-        Comentario:
-        <input bind:value={commentText} />
-      </label>
-      <label>
-        texto extra:
-        <input bind:value={extra} />
-      </label>
-      <button type="submit">Agregar</button>
-    </form>
-
-    <h3>Comentarios</h3>
-    <ul>
-      {#each comments as { title, text, name }}
-        <li>
-          <strong>{title}:</strong>
-          {text}
-          {name}
-        </li>
-      {/each}
-    </ul>
-  </section>
-</main>
-
-<style>
-  main {
-    display: flex;
-    flex-direction: column;
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-
-  .profile-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  img {
-    width: 100px;
-    border-radius: 50%;
-    margin-right: 20px;
-  }
-
-  h2 {
-    margin: 0;
-  }
-
-  ul {
-    padding: 0;
-    list-style-type: none;
-  }
-
-  .comments-section {
-    margin-top: 20px;
-  }
-
-  form {
-    margin-bottom: 20px;
-  }
-
-  h3 {
-    margin-bottom: 10px;
-  }
-
-  ul {
-    padding: 0;
-    list-style-type: none;
-  }
-
-  li {
-    margin-bottom: 10px;
-  }
-</style> -->

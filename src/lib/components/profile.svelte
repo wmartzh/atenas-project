@@ -24,12 +24,12 @@
 <form>
   <div class="space-y-12">
     <div class="border-b border-gray-900/10 pb-12">
-      <h2 class="text-base font-semibold leading-7 text-gray-900">Información personal</h2>
+      <h2 class="text-base font-semibold leading-7 bg-base-100">Información personal</h2>
 
       <br>
 
       <div class="sm:col-span-4">
-        <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Nombre completo</label>
+        <label for="email" class="block text-sm font-medium leading-6 bg-base-100">Nombre completo</label>
         <div class="mt-2">
           <input id="name" name="name" type="text" autocomplete="name" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
         </div>
@@ -38,42 +38,42 @@
       <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
         <div class="sm:col-span-2 sm:col-start-1">
-          <label for="id-university" class="block text-sm font-medium leading-6 text-gray-900">Número de carnet</label>
+          <label for="id-university" class="block text-sm font-medium leading-6 bg-base-100">Número de carnet</label>
           <div class="mt-2">
             <input type="text" name="university_id" id="university_id" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-2">
-          <label for="Intentification" class="block text-sm font-medium leading-6 text-gray-900">Identificación / Dimex</label>
+          <label for="Intentification" class="block text-sm font-medium leading-6 bg-base-100">Identificación / Dimex</label>
           <div class="mt-2">
             <input type="text" name="personal_id" id="personal_id" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-2">
-          <label for="Celphone_Number" class="blockId text-sm font-medium leading-6 text-gray-900">Número de cuarto</label>
+          <label for="Celphone_Number" class="blockId text-sm font-medium leading-6 bg-base-100">Número de cuarto</label>
           <div class="mt-2">
             <input type="text" name="number_room" id="number_room" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Correo electrónico</label>
+          <label for="first-name" class="block text-sm font-medium leading-6 bg-base-100">Correo electrónico</label>
           <div class="mt-2">
             <input type="text" name="email" id="email" autocomplete="email" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label for="last-name" class="block text-sm font-medium leading-6 text-gray-900">Numero de telefono / WhatsApp</label>
+          <label for="last-name" class="block text-sm font-medium leading-6 bg-base-100">Numero de telefono / WhatsApp</label>
           <div class="mt-2">
             <input type="text" name="last-name" id="last_name" autocomplete="family-name" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
         </div>
 
         <div class="sm:col-span-3">
-          <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Nacionalidad</label>
+          <label for="country" class="block text-sm font-medium leading-6 bg-base-100">Nacionalidad</label>
           <div class="mt-2">
             <select id="country" name="country" autocomplete="country-name" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6">
               <option>Costa Rica</option>
@@ -91,7 +91,7 @@
         </div>
 
         <div class="col-span-full">
-          <label for="Carrer" class="block text-sm font-medium leading-6 text-gray-900">Carrera</label>
+          <label for="Carrer" class="block text-sm font-medium leading-6 bg-base-100">Carrera</label>
           <div class="mt-2">
             <input type="text" name="carrer" id="carrer" autocomplete="street-address" disabled={!editing} class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
           </div>
