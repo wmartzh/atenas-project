@@ -1,4 +1,4 @@
-<!-- <div class="grid">
+<div class="grid">
   <div>
     <h2>Articles:</h2>
     <article>
@@ -22,9 +22,9 @@
     <input type="text" id="updatedAt" name="updatedAt" style="margin-bottom: 10px; padding: 5px;" />
     <button type="submit" style="background-color: lightgray; padding: 10px;">Add Article</button>
   </form>
-</div> -->
+</div>
 
-<script>
+<!-- <script>
     
   let events = [];
 
@@ -199,4 +199,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
