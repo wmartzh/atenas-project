@@ -3,6 +3,29 @@ import prisma from '$server/prisma.client';
 import { getFirebaseServer } from '../firebase.server';
 
 export class UserService {
+	searchUsers(search: string) {
+		return prisma.user.findMany({
+			where: {
+				OR: [
+					{
+						email: {
+							contains: search
+						}
+					},
+					{
+						name: {
+							contains: search
+						}
+					},
+					{
+						lastName: {
+							contains: search
+						}
+					}
+				]
+			}
+		});
+	}
 	createUserWithProfile(user: Prisma.UserCreateInput, profile: Prisma.ProfileCreateInput) {
 		return prisma.user.create({
 			data: {
@@ -50,7 +73,7 @@ export class UserService {
 		}
 		if (replaceEmail) {
 			firebaseServer.data.auth().updateUser(uuid, {
-				email:replaceEmail
+				email: replaceEmail
 			});
 		}
 

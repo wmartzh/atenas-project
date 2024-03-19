@@ -1,9 +1,11 @@
 <script lang="ts">
 	import Table from '$lib/components/table.svelte';
+	import SearchTable from '$lib/components/search-table.svelte';
 	import type { Role } from '@prisma/client';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	$: userList = data.userList;
 
 	const ROLES_MAP = {
 		STUDENT: 'Estudiante',
@@ -17,17 +19,24 @@
 		{ label: 'Nombre', key: 'name' },
 		{ label: 'Apellido', key: 'lastName' },
 		{ label: 'Email', key: 'email' },
+		{
+			label: 'Estado',
+			key: 'status',
+			formatter: (value: boolean) => (value ? 'Activo' : 'Inactivo')
+		},
 		{ label: 'Role', key: 'role', formatter: (value: Role) => ROLES_MAP[value] }
 	];
+
 	let modal: HTMLDialogElement;
 	$: currentState = null;
+
 	function handleRowClick(row: any) {
-		console.log(row);
 		currentState = row.detail;
 		modal.showModal();
 	}
+
 	function onSearch(e: any) {
-		console.log(e.detail);
+		userList = e.detail;
 	}
 </script>
 
@@ -48,8 +57,9 @@
 		</div>
 	</div>
 </dialog>
+<SearchTable action="/api/users" on:search={onSearch} />
 <Table
-	data={data.userList}
+	data={userList}
 	titles={tableDescriptor}
 	on:row-click={handleRowClick}
 	on:search={onSearch}
