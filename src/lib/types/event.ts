@@ -1,30 +1,27 @@
-
-  // Create the event type with status as an enum
-  export type Event = {
-    id: string;
+    export type Event = {
+    id: number;
     title: string;
     start: string;
     end: string;
-    status: EventStatus;
-    weekDay: weekDays;
+    Status: 'Pending' | 'Confirmed' | 'Canceled';
+    WeekDay: 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday';
     scheduleDate: string;
     createdAt: string;
     updatedAt: string;
   };
   
-  // Define the weekDays enum
-  enum weekDays {
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
-    Sunday
-  }
+  // enum weekDays {
+  //   Monday,
+  //   Tuesday,
+  //   Wednesday,
+  //   Thursday,
+  //   Friday,
+  //   Saturday,
+  //   Sunday
+  // }
   
-enum EventStatus {
-    Pending,
-    Confirmed,
-    Canceled
-  }
+// enum EventStatus {
+//     Pending,
+//     Confirmed,
+//     Canceled
+//   }

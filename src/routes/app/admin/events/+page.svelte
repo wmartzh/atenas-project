@@ -1,4 +1,202 @@
-<script lang="ts">
+<div class="grid">
+  <div>
+    <h2>Articles:</h2>
+    <article>
+      <button class="outline secondary">Delete Article</button>
+      <a href="/" role="button" class="outline contrast" style="width: 100%;">Edit Article</a>
+    </article>
+  </div>
+  <form  method="POST" action="?/createEvent" style="display: flex; flex-direction: column;">
+    <h3>New Article</h3>
+    <label for="title" style="background-color: lightblue; padding: 5px;">Title</label>
+    <input type="text" id="title" name="title" style="margin-bottom: 10px; padding: 5px;" />
+    <label for="start" style="background-color: lightgreen; padding: 5px;">Start Date</label>
+    <input type="text" id="start" name="start" style="margin-bottom: 10px; padding: 5px;" />
+    <label for="end" style="background-color: lightcoral; padding: 5px;">End Date</label>
+    <input type="text" id="end" name="end" style="margin-bottom: 10px; padding: 5px;" />
+    <label for="scheduleDate" style="background-color: lightgoldenrodyellow; padding: 5px;">Schedule Date</label>
+    <input type="text" id="scheduleDate" name="scheduleDate" style="margin-bottom: 10px; padding: 5px;" />
+    <label for="createdAt" style="background-color: lightsalmon; padding: 5px;">Created At</label>
+    <input type="text" id="createdAt" name="createdAt" style="margin-bottom: 10px; padding: 5px;" />
+    <label for="updatedAt" style="background-color: lightseagreen; padding: 5px;">Updated At</label>
+    <input type="text" id="updatedAt" name="updatedAt" style="margin-bottom: 10px; padding: 5px;" />
+    <button type="submit" style="background-color: lightgray; padding: 10px;">Add Article</button>
+  </form>
+</div>
 
+<!-- <script>
+    
+  let events = [];
+
+  let isModalOpen = false;
+  let name = "";
+  let date = "";
+  let time = "";
+  let endTime = "";
+  let status = "Pending";
+  let weekDay = "Sunday";
+
+  function addEvent() {
+    if (name && date && time && endTime && status && weekDay) {
+      events = [...events, {id: "",
+        title: name, 
+        start:`${date} ${time}`, 
+        end:`${date} ${endTime}`,
+        status: status,
+        weekDay: weekDay,
+        scheduleDate: date,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      }];
+      name = "";
+      date = "";
+      time = "";
+      endTime = "";
+      status = "Pending";
+      weekDay = "Sunday";
+    }
+  }
+
+  function sortEvents() {
+    events.sort((a, b) => new Date(a.start) - new Date(b.start));
+  }
+
+  function generateId() {
+    return Math.random().toString(36).substring(7);
+  }
+
+  function openModal() {
+    isModalOpen = true;
+  }
+
+  function closeModal() {
+    isModalOpen = false;
+  }
+
+  function openModal2() {
+    isModalOpen = true;
+  }
+
+  function closeModal2() {
+    isModalOpen = false;
+  }
+
+  function saveEvent() {
+    if (name.trim() === "") {
+      alert("Por favor, ingresa un nombre para el evento.");
+      return;
+    }
+    if (date === "") {
+      alert("Por favor, selecciona una fecha para el evento.");
+      return;
+    }
+    if (time === "") {
+      alert("Por favor, selecciona una hora de inicio para el evento.");
+      return;
+    }
+    if (endTime === "") {
+      alert("Por favor, selecciona una hora de finalización para el evento.");
+      return;
+    }
+
+    addEvent();
+    closeModal();
+  }
+
+  function cancelEvent() {
+    isModalOpen = false;
+    name = "";
+    date = "";
+    time = "";
+    endTime = "";
+    status = "Pending";
+    weekDay = "Sunday";
+  }
 </script>
-<h1>Events Page</h1>
+
+<h1 class="title1 font-40">Eventos</h1>
+
+<div>
+  <ul>
+    {#each events as {id, title, start, end, status, weekDay, scheduleDate, createdAt, updatedAt}}
+      <li>
+        <strong>ID:</strong> {id}<br>
+        <strong>Nombre:</strong> {title}<br>
+        <strong>Inicio:</strong> {start}<br>
+        <strong>Fin:</strong> {end}<br>
+        <strong>Estado:</strong> {status}<br>
+        <strong>Día de la semana:</strong> {weekDay}<br>
+        <strong>Fecha programada:</strong> {scheduleDate}<br>
+        <strong>Creado en:</strong> {createdAt}<br>
+        <strong>Actualizado en:</strong> {updatedAt}
+      </li>
+      <div class="flex justify-center">
+        <button class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600">
+          Editar
+        </button>
+      </div>
+    {/each}
+  </ul>
+</div>
+
+<button on:click="{openModal}" class="rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600">
+  Nuevo evento
+</button>
+
+<div class="modal" class:modal-open="{isModalOpen}" aria-hidden="true">
+  <div class="modal-box">
+    <h5 class="text-xl font-medium text-gray-700">Crear nuevo evento</h5>
+    <button type="button" on:click="{closeModal}" class="text-gray-400 focus:outline-none hover:text-gray-500">
+      <span class="sr-only">Cerrar modal</span>
+      <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </button>
+    <div>
+      <form>
+        <div class="p-6 space-y-4">
+          <div class="flex flex-col">
+            <label for="name" class="text-sm font-medium text-gray-700 mb-2">Nombre del evento</label>
+            <input type="text" id="name" name="name" bind:value={name} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+          </div>
+          <div class="flex flex-col">
+            <label for="date_start" class="text-sm font-medium text-gray-700 mb-2">Fecha de inicio</label>
+            <input type="date" id="date_start" name="date_start" bind:value={date} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+          </div>
+          <div class="flex flex-col">
+            <label for="time_start" class="text-sm font-medium text-gray-700 mb-2">Hora de inicio</label>
+            <input type="time" id="time_start" name="time_start" bind:value={time} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+          </div>
+          <div class="flex flex-col">
+            <label for="time_end" class="text-sm font-medium text-gray-700 mb-2">Hora de finalización</label>
+            <input type="time" id="time_end" name="time_end" bind:value={endTime} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+          </div>
+          <div class="flex flex-col">
+            <label for="status" class="text-sm font-medium text-gray-700 mb-2">Estado</label>
+            <select id="status" name="status" bind:value={status} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+              <option value="Pending">Pendiente</option>
+              <option value="Confirmed">Confirmado</option>
+              <option value="Canceled">Cancelado</option>
+            </select>
+          </div>
+          <div class="flex flex-col">
+            <label for="weekDay" class="text-sm font-medium text-gray-700 mb-2">Día de la semana</label>
+            <select id="weekDay" name="weekDay" bind:value={weekDay} class="shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md block w-full p-2.5 border border-gray-300" required>
+              <option value="Sunday">Domingo</option>
+              <option value="Monday">Lunes</option>
+              <option value="Tuesday">Martes</option>
+              <option value="Wednesday">Miércoles</option>
+              <option value="Thursday">Jueves</option>
+              <option value="Friday">Viernes</option>
+              <option value="Saturday">Sábado</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end space-x-2 p-4 border-t border-gray-200 rounded-b-lg">
+          <button type="button" on:click="{cancelEvent}" class="px-4 py-2 text-gray-500 hover:text-gray-700 rounded-md">Cancelar</button>
+          <button type="button" on:click="{saveEvent}" class="px-4 py-2 bg-blue-500 text-white rounded-md">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> -->
