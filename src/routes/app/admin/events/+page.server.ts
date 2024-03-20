@@ -1,56 +1,82 @@
-
 import { redirect, type RequestEvent } from '@sveltejs/kit';
-import { eventService } from '$server/services/event.service';
+import eventService from '$server/services/event.service';
 import type { Event } from '$lib/types/event.js';
+import { $Enums, WeekDays } from '@prisma/client';
 
 export const actions = {
-	createEvent: async (event: RequestEvent) => {
-		try {
-			const formData = Object.fromEntries(
+  createEvent: async (event: RequestEvent) => {
+    try {
+      const formData = Object.fromEntries(
         (await event.request.formData()).entries()
       ) as unknown as Event;
 
-			eventService.createEvent(formData);
-		} catch (error) {
-			return {
-				status: 500,
-				body: 'Error creating account. Please try again.'
-			};
-		}
-		return redirect(303, '/app');
-	},
 
-  updateEvent: async (event: RequestEvent) => {
-		try {
-			const formData = Object.fromEntries(
-        (await event.request.formData()).entries()
-      ) as unknown as Event;
+      const response = await eventService.createEvent({
+        title: formData.title,
+        start: new Date(Number(formData.start)),
+        end: new Date(Number(formData.end)),
+        status: $Enums.EventStatus[formData.Status as keyof typeof $Enums.EventStatus],
+        weekDays: [formData.WeekDay] as unknown as WeekDays[],
+        scheduleDate: formData.scheduleDate,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      console.log("🚀 ~ createEvent: ~ response:", response)
+    } catch (error) {
 
-			eventService.createEvent(formData);
-		} catch (error) {
-			return {
-				status: 500,
-				body: 'Error creating account. Please try again.'
-			};
-		}
-		return redirect(303, '/app');
-	},
+      return {
+        status: 500,
+        body: 'Error creating account. Please try again.'
+      };
+    }
+    return redirect(303, '/app/admin/events');
+  },
 
   deleteEvent: async (event: RequestEvent) => {
-		try {
-			const formData = Object.fromEntries(
-        (await event.request.formData()).entries()
-      ) as unknown as Event;
+    try {
+      const formDataEntries = await event.request.formData();
+      const formData = Object.fromEntries(formDataEntries.entries()) as unknown as Event;
 
-			eventService.createEvent(formData);
-		} catch (error) {
-			return {
-				status: 500,
-				body: 'Error creating account. Please try again.'
-			};
-		}
-		return redirect(303, '/app');
-	}
+      const eventId = formData.id;
+      if (!eventId) {
+        throw new Error('Event ID is missing.');
+      }
+
+      await eventService.deleteEvent({
+        where: { id: Number(eventId) }
+      });
+    } catch (error) {
+      return {
+        status: 500,
+        body: 'Error deleting the event. Please try again.'
+      };
+    }
+    return redirect(303, '/app');
+  },
+
+  updateEvent: async (event: RequestEvent) => {
+    try {
+      const formDataEntries = await event.request.formData();
+      const formData = Object.fromEntries(formDataEntries.entries()) as unknown as Event;
+
+      const eventId = formData.id;
+      if (!eventId) {
+        throw new Error('Event ID is missing.');
+      }
+
+      await eventService.updateEvent({
+        where: { id: Number(eventId) },
+        data: formData as any,
+      });
+    } catch (error) {
+      return {
+        status: 500,
+        body: 'Error updating the event. Please try again.'
+      };
+    }
+    return redirect(303, '/app/admin/events');
+  }
+
 };
 
 

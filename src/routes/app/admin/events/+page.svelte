@@ -6,7 +6,7 @@
       <a href="/" role="button" class="outline contrast" style="width: 100%;">Edit Article</a>
     </article>
   </div>
-  <form action="?/createEvent" method="POST" style="display: flex; flex-direction: column;">
+  <form  method="POST" action="?/createEvent" style="display: flex; flex-direction: column;">
     <h3>New Article</h3>
     <label for="title" style="background-color: lightblue; padding: 5px;">Title</label>
     <input type="text" id="title" name="title" style="margin-bottom: 10px; padding: 5px;" />

@@ -1,42 +1,34 @@
-import type { Event } from '$lib/types/event.js';
+import type { Event } from "$lib/types/event";
 import prisma from "$server/prisma.client";
-import type { Prisma } from "@prisma/client"
+import type { Prisma } from "@prisma/client";
 
-export class eventService {
-    static createEvent(formData: Event) {
-        console.log("Printing Event Data:");
-        for (const key in formData) {
-            if (Object.prototype.hasOwnProperty.call(formData, key)) {
-                console.log(`${key}: ${formData[key as keyof Event]}`);
-            }
+export class EventService {
+    async createEvent(event: Prisma.EventCreateInput) {
+        try {
+            console.log("🚀 ~ EventService ~ createEvent ~ event:", event)
+        
+            const test = await  prisma.event.create({
+                data: event
+            });
+            console.log("🚀 ~ EventService ~ createEvent ~ test:", test)
+        } catch (error) {
+            console.log("🚀 ~ EventService ~ createEvent ~ error:", error)
+            
         }
-        throw new Error('Method not implemented.');
     }
 
-    createEvent(event: Prisma.EventCreateInput) {
-        return prisma.event.create({
-            data: {
-                ...event,
-            }
-        });
+    deleteEvent(event: Prisma.EventDeleteArgs) {
+        console.log(JSON.stringify(event, null, 2));
+        return prisma.event.delete(event);
     }
-    deleteEvent(event: Prisma.EventCreateInput) {
-        return prisma.event.create({
-            data: {
-                ...event,
-            }
-        });
-    }
-    updateEvent(event: Prisma.EventCreateInput) {
-        return prisma.event.create({
-            data: {
-                ...event,
-            }
-        });
+
+    updateEvent(args: Prisma.EventUpdateArgs) {
+        console.log(JSON.stringify(event, null, 2));
+        return prisma.event.update(args);
     }
 }
 
-export default new eventService();
+export default new EventService();
 
 
 
