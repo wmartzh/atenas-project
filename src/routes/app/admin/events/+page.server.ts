@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 import { redirect, type RequestEvent } from '@sveltejs/kit';
 import { eventService } from '$server/services/event.service';
@@ -123,13 +122,3 @@ export const actions = {
 //         return redirect(303, '/app');
 //     }
 // };
-=======
-import type { PageServerLoad } from './$types';
-
-export const load = (async () => {
-    return {};
-}) satisfies PageServerLoad;
-
-
-// create actions
->>>>>>> main

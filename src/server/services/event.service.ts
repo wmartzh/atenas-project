@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import type { Event } from '$lib/types/event.js';
 import prisma from "$server/prisma.client";
 import type { Prisma } from "@prisma/client"
@@ -125,6 +124,3 @@ export default new eventService();
     //         return fail(500, { message: 'Error creating event' });
     //     }
     // }
-=======
-// Event service page
->>>>>>> main
