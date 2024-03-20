@@ -111,13 +111,13 @@
 									{/if}
 								</div>
 							</FormInput>
-							<FormInput type="text" name="noCarnet">
+							<FormInput type="text" name="universityId">
 								<div class="label" slot="label">
 									<span class="label-text">No. Carnet</span>
 								</div>
 								<div class="label" slot="button-label">
-									{#if $errors?.noCarnet?.message}
-										<span class="label-text-alt text-error">{$errors.noCarnet.message}</span>
+									{#if $errors?.universityId?.message}
+										<span class="label-text-alt text-error">{$errors.universityId.message}</span>
 									{/if}
 								</div>
 							</FormInput>

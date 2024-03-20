@@ -1,4 +1,10 @@
+<<<<<<< HEAD
     export type Event = {
+=======
+
+  // Create the event type with status as an enum
+  export type Event = {
+>>>>>>> main
     id: string;
     title: string;
     start: string;
@@ -10,6 +16,10 @@
     updatedAt: string;
   };
   
+<<<<<<< HEAD
+=======
+  // Define the weekDays enum
+>>>>>>> main
   enum weekDays {
     Monday,
     Tuesday,
