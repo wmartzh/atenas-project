@@ -22,4 +22,3 @@
 
 <Table data={data.userList} titles={titles}></Table>
 
-//son solo pruebas 
